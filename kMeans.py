@@ -40,32 +40,29 @@ def obter_novo_centroid(list_distance, number_centroid):
         print(f'Centroid {c} - {centroids[c]}')
     return np.array(centroids)
 
-def iterate_k_means(data, centroids):
-    label = []
-    cluster_label = []
+def k_means(points, centroids):
     #quantidade da dados na planilha
-    total_points = len(data)
+    total_points = len(points)
     #qtd de centroid
     qtd_centroid = len(centroids)
     #variável controle
     last_index_distance_centroid = []
     while True:
-
         distance = []
         for index_point in range(0, total_points):
-            step_interaction = {}
-            step_interaction['data'] = data[index_point]
+            interaction = {}
+            interaction['data'] = points[index_point]
 
             distance_centroid = {}
             #AQUI É SALVA A DISTANCIA DE CADA CENTROID DE ACORDO A INTEREÇÃO DO MOMENTO
             for index_centroid in range(0, qtd_centroid):
 
-                step_interaction[f'Distancia {index_centroid}'] = obter_discantica_acordo_centroid(data[index_point], centroids[index_centroid])
-                step_interaction[f'centroid - {index_centroid}'] = centroids[index_centroid]
-                distance_centroid[index_centroid] = step_interaction[f'Distancia {index_centroid}']
+                interaction[f'Distancia {index_centroid}'] = obter_discantica_acordo_centroid(points[index_point], centroids[index_centroid])
+                interaction[f'centroid - {index_centroid}'] = centroids[index_centroid]
+                distance_centroid[index_centroid] = interaction[f'Distancia {index_centroid}']
             # label = assign_label_cluster(distance, data_points[index_point], centroids)
-            step_interaction['index'] = obter_centroid_proximo(distance_centroid)
-            distance.append(step_interaction)
+            interaction['index'] = obter_centroid_proximo(distance_centroid)
+            distance.append(interaction)
         new_index_distance_centroid = [x['index'] for x in distance]
         printar_distancia(distance)
         if last_index_distance_centroid != new_index_distance_centroid:
@@ -98,4 +95,4 @@ def run(number_centroid=2):
     filename = "data.csv"
     data = np.genfromtxt(filename, delimiter=",")
     centroids = create_centroids(number_centroid)
-    iterate_k_means(data, centroids)
+    k_means(data, centroids)
