@@ -1,5 +1,4 @@
 import numpy as np
-import os
 import random
 
 def obter_discantica_acordo_centroid(point, centroid):
@@ -60,7 +59,6 @@ def k_means(points, centroids):
                 interaction[f'Distancia {index_centroid}'] = obter_discantica_acordo_centroid(points[index_point], centroids[index_centroid])
                 interaction[f'centroid - {index_centroid}'] = centroids[index_centroid]
                 distance_centroid[index_centroid] = interaction[f'Distancia {index_centroid}']
-            # label = assign_label_cluster(distance, data_points[index_point], centroids)
             interaction['index'] = obter_centroid_proximo(distance_centroid)
             distance.append(interaction)
         new_index_distance_centroid = [x['index'] for x in distance]
